@@ -1,0 +1,33 @@
+ship-check on: ~/projects/my-first-app
+git repo: yes (files tracked by git, plus full history)
+
+1. AI agent settings files (saved 'don't ask again' approvals)
+  BLOCKER  .claude/settings.local.json has 1 saved command(s) with a secret in them, and git has the file. Rotate those credentials first, then remove the file from git.
+  warning  .claude/settings.local.json is not in .gitignore. Add the line: .claude/settings.local.json
+
+2. Secrets in the files you are about to publish
+           .env:1  API_**** (48 chars)
+           config.py:1  pass**** (52 chars)
+  BLOCKER  2 secret-shaped string(s) in the files above. Check each one. Real ones get rotated, placeholders get reworded.
+
+3. Secrets in git history (deleted is not gone)
+           commit 849f030  2026-11-20  first build
+  BLOCKER  1 commit(s) added or removed a secret-shaped string. A public repo publishes all of them. Rotate, then publish from a fresh copy with clean history.
+
+4. Files that should never ship
+           .env
+  BLOCKER  1 file(s) above are key or env files. Remove them from what you publish.
+  warning  .gitignore does not cover .env. Add the line: .env
+
+5. Things that say more about you than you meant
+           app.py
+  warning  the file(s) above contain a path from your computer (your username and folder names).
+  ok       no email addresses
+
+Result: 4 blocker(s), 3 warning(s)
+
+The script cannot check these. You have to:
+  - Open the live app in a private window, logged out. Whatever loads, the internet can read.
+  - Look at the share setting on every app, doc and dashboard. 'Anyone with the link' is public.
+  - List what your AI agent can write to. Start on read-only and add write access one tool at a time.
+  - If a real key shows up above: rotate it first, clean up second.
